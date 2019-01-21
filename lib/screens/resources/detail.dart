@@ -46,7 +46,7 @@ class ResourceDetailState extends State<ResourceDetail> {
                 title: Text(widget.resource.name),
                 subtitle: Text(widget.resource.description),
               ),
-              Text("${widget.resource.name}  url is ${widget.resource.url}"),
+              Text("${widget.resource.name} url is ${widget.resource.url}"),
             ],
           ),
         ),

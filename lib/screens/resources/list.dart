@@ -12,7 +12,7 @@ class ResourceList extends StatefulWidget {
 
 class ResourceListState extends State<ResourceList> {
   DbHelper dbHelper = new DbHelper();
-  List<Resource> resources;
+  List<Resource> resources = new List<Resource>();
   int count = 0;
   int defaultResourceId = 3;
 
@@ -20,6 +20,16 @@ class ResourceListState extends State<ResourceList> {
   void initState() {
     super.initState();
     _loadDefaultResourceId();
+    _loadResources();
+  }
+
+  _loadResources() async {
+    await dbHelper.initializeDb();
+    List<Resource> _resources = await dbHelper.getResources();
+    setState(() {
+      resources = _resources;
+      count = _resources.length;
+    });
   }
 
   _loadDefaultResourceId() async {
@@ -39,9 +49,6 @@ class ResourceListState extends State<ResourceList> {
 
   @override
   Widget build(BuildContext context) {
-    if (resources == null) {
-      getResourcesData();
-    }
     return Scaffold(
       appBar: AppBar(
         title: Text("Resources"),
@@ -91,7 +98,7 @@ class ResourceListState extends State<ResourceList> {
       ),
     );
     if (result != null && result) {
-      getResourcesData();
+      _loadResources();
     }
   }
 
@@ -103,20 +110,7 @@ class ResourceListState extends State<ResourceList> {
       ),
     );
     if (result != null && result) {
-      getResourcesData();
+      _loadResources();
     }
-  }
-
-  void getResourcesData() {
-    var dbFuture = dbHelper.initializeDb();
-    dbFuture.then((result) {
-      var resourcesFuture = dbHelper.getResources();
-      resourcesFuture.then((data) {
-        setState(() {
-          resources = data;
-          count = data.length;
-        });
-      });
-    });
   }
 }
