@@ -17,32 +17,33 @@ class ResourceAddState extends State<ResourceAdd> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Add a new resource"),
+      appBar: AppBar(
+        title: Text("Add a new resource"),
+      ),
+      body: Padding(
+        padding: EdgeInsets.only(top: 30.0, left: 10.0, right: 10.0),
+        child: Column(
+          children: <Widget>[
+            TextField(
+              controller: txtName,
+              decoration: InputDecoration(labelText: "Name"),
+            ),
+            TextField(
+              controller: txtDescription,
+              decoration: InputDecoration(labelText: "Description"),
+            ),
+            TextField(
+              controller: txtUrl,
+              decoration: InputDecoration(labelText: "Url"),
+            ),
+            RaisedButton(
+              child: Text('Save'),
+              onPressed: save,
+            ),
+          ],
         ),
-        body: Padding(
-          padding: EdgeInsets.only(top: 30.0, left: 10.0, right: 10.0),
-          child: Column(
-            children: <Widget>[
-              TextField(
-                controller: txtName,
-                decoration: InputDecoration(labelText: "Name"),
-              ),
-              TextField(
-                controller: txtDescription,
-                decoration: InputDecoration(labelText: "Description"),
-              ),
-              TextField(
-                controller: txtUrl,
-                decoration: InputDecoration(labelText: "Url"),
-              ),
-              RaisedButton(
-                child: Text('Save'),
-                onPressed: save,
-              ),
-            ],
-          ),
-        ));
+      ),
+    );
   }
 
   void save() async {

@@ -1,6 +1,7 @@
+import 'dart:async';
 import 'package:http/http.dart' as http;
 
-class Api {
+class API {
   static Future getResourceInfo(String url) {
     return http.get(url);
   }

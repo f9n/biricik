@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:biricik/db/dbHelper.dart';
 import 'package:biricik/models/resource.dart';
+import 'package:biricik/widgets/uv4l_camera_control.dart';
 
 enum Choice { Delete, Update }
 
@@ -51,7 +52,29 @@ class ResourceDetailState extends State<ResourceDetail> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          goToCameraConfigurations();
+        },
+        tooltip: "Go to Camera Configurations",
+        child: Icon(Icons.camera_alt),
+      ),
     );
+  }
+
+  void goToCameraConfigurations() async {
+    bool result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Uv4lCameraConfigurationScreen(
+              name: widget.resource.name,
+              url: widget.resource.url,
+            ),
+      ),
+    );
+    if (result != null && result) {
+      print('Loading...');
+    }
   }
 
   void select(Choice choice) async {
