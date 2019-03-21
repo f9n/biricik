@@ -57,8 +57,7 @@ class ResourceListState extends State<ResourceList> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print("Add new resource");
-          //goToResourceAdd();
+          goToResourceAdd();
         },
         tooltip: "Add new Resource",
         child: Icon(Icons.add),
@@ -66,7 +65,8 @@ class ResourceListState extends State<ResourceList> {
     );
   }
 
-  _buildResourceItemWidget(Resource resource) {
+  Widget _buildResourceItemWidget(Resource resource) {
+    print(resource);
     var resourceIcon = resource.id == defaultResourceId
         ? Icons.bookmark
         : Icons.bookmark_border;
@@ -79,35 +79,11 @@ class ResourceListState extends State<ResourceList> {
         title: Text(resource.name),
         subtitle: Text(resource.description),
         onTap: () {
-          //goToDetail(resource);
+          goToDetail(resource);
         },
         onLongPress: () => _setDefaultResourceId(resource.id),
       ),
     );
-  }
-  /*
-  ListView resourceListItems() {
-    return ListView.builder(
-      itemCount: count,
-      itemBuilder: (BuildContext context, int position) {
-        
-      },
-    );
-    */
-}
-
-/*
-
-  void goToDetail(Resource resource) async {
-    bool result = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ResourceDetail(resource),
-      ),
-    );
-    if (result != null && result) {
-      _loadResources();
-    }
   }
 
   void goToResourceAdd() async {
@@ -117,9 +93,16 @@ class ResourceListState extends State<ResourceList> {
         builder: (context) => ResourceAdd(),
       ),
     );
-    if (result != null && result) {
-      _loadResources();
-    }
+    print("Go To Resource Add  Page Result: ${result}");
+  }
+
+  void goToDetail(Resource resource) async {
+    bool result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ResourceDetail(resource),
+      ),
+    );
+    print("Go To Detail Page Result: ${result}");
   }
 }
-*/

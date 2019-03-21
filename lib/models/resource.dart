@@ -49,6 +49,10 @@ class Resource {
     this._url = o["Url"];
   }
 
+  @override
+  String toString() {
+    return "Resource<id:${this.id}, name:${this.name}, description:${this.description}, url:${this.url}>";
+  }
   /*
   Resource.fromJson(Map json) {
     this.name = json['name'];

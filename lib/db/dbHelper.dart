@@ -67,8 +67,10 @@ class DbHelper {
     Database db = await this.db;
     List<Resource> resources = new List<Resource>();
     var result = await db.rawQuery("Select * from $tableResource");
+    print("Database Getting Resources => ${result}");
     for (var resourceObj in result) {
-      resources.add(Resource.fromObject(resourceObj));
+      var resource = Resource.fromObject(resourceObj);
+      resources.add(resource);
     }
     return resources;
   }
