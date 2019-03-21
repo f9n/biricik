@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:biricik/routes.dart';
 
-void main() => runApp(BiricikApp());
+void main() {
+  SystemChrome.setPreferredOrientations(
+    [DeviceOrientation.landscapeLeft, DeviceOrientation.portraitUp],
+  );
+  runApp(BiricikApp());
+}
 
 class BiricikApp extends StatelessWidget {
   @override
