@@ -4,70 +4,47 @@ class Resource {
   String _description;
   String _url;
 
-  Resource(this._name, this._description, this._url);
-  Resource.withId(this._id, this._name, this._description, this._url);
+  Resource.withoutId({String name, String description, String url}) {
+    this._name = name;
+    this._description = description;
+    this._url = url;
+  }
+  Resource({int id, String name, String description, String url}) {
+    this._id = id;
+    this._name = name;
+    this._description = description;
+    this._url = url;
+  }
 
   int get id => _id;
+  set id(int id) => _id = id;
   String get name => _name;
+  set name(String name) => _name = name;
   String get description => _description;
+  set description(String description) => _description = description;
   String get url => _url;
+  set url(String url) => _url = url;
 
-  set name(String value) {
-    if (value.length >= 3) {
-      _name = value;
-    }
+  Resource.fromJson(Map<String, dynamic> json) {
+    _id = json['Id'];
+    _name = json['Name'];
+    _description = json['Description'];
+    _url = json['Url'];
   }
 
-  set description(String value) {
-    if (value.length >= 10) {
-      _description = value;
-    }
-  }
-
-  set url(String value) {
-    if (value.length >= 10) {
-      _url = value;
-    }
-  }
-
-  Map<String, dynamic> toMap() {
-    var map = Map<String, dynamic>();
-    map["name"] = _name;
-    map["description"] = _description;
-    map["url"] = _url;
-
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
     if (_id != null) {
-      map["id"] = _id;
+      data['Id'] = _id;
     }
-    return map;
-  }
-
-  Resource.fromObject(dynamic o) {
-    this._id = o["Id"];
-    this._name = o["Name"];
-    this._description = o["Description"];
-    this._url = o["Url"];
+    data['Name'] = this._name;
+    data['Description'] = this._description;
+    data['Url'] = this._url;
+    return data;
   }
 
   @override
   String toString() {
     return "Resource<id:${this.id}, name:${this.name}, description:${this.description}, url:${this.url}>";
   }
-  /*
-  Resource.fromJson(Map json) {
-    this.name = json['name'];
-    this.description = json['description'];
-    this.host = json['host'];
-    this.port = json['port'];
-  }
-
-  Map toJson() {
-    return {
-      "name": this.name,
-      "description": this.description,
-      "host": this.host,
-      "port": this.port,
-    };
-  }
-  */
 }

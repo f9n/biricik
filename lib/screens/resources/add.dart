@@ -48,7 +48,11 @@ class ResourceAddState extends State<ResourceAdd> {
 
   void save() async {
     int result = await dbHelper.insert(
-      Resource(txtName.text, txtDescription.text, txtUrl.text),
+      Resource.withoutId(
+        name: txtName.text,
+        description: txtDescription.text,
+        url: txtUrl.text,
+      ),
     );
 
     if (result != 0) {

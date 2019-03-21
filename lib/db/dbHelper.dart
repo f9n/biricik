@@ -39,18 +39,18 @@ class DbHelper {
 
   Future<Database> _createDb(Database db, int version) async {
     await db.execute(
-        "Create table $tableResource($colId integer primary key, $colName text, $colDescription text, $colUrl text)");
+        "Create table $tableResource($colId integer primary key autoincrement, $colName text, $colDescription text, $colUrl text)");
   }
 
   Future<int> insert(Resource resource) async {
     Database db = await this.db;
-    var result = await db.insert(tableResource, resource.toMap());
+    var result = await db.insert(tableResource, resource.toJson());
     return result;
   }
 
   Future<int> update(Resource resource) async {
     Database db = await this.db;
-    var result = await db.update(tableResource, resource.toMap(),
+    var result = await db.update(tableResource, resource.toJson(),
         where: "$colId =?", whereArgs: [resource.id]);
 
     return result;
@@ -69,7 +69,7 @@ class DbHelper {
     var result = await db.rawQuery("Select * from $tableResource");
     print("Database Getting Resources => ${result}");
     for (var resourceObj in result) {
-      var resource = Resource.fromObject(resourceObj);
+      var resource = Resource.fromJson(resourceObj);
       resources.add(resource);
     }
     return resources;
