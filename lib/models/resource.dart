@@ -3,6 +3,7 @@ class Resource {
   String _name;
   String _description;
   String _url;
+
   Resource(this._name, this._description, this._url);
   Resource.withId(this._id, this._name, this._description, this._url);
 

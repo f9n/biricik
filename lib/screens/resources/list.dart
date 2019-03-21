@@ -12,24 +12,12 @@ class ResourceList extends StatefulWidget {
 
 class ResourceListState extends State<ResourceList> {
   DbHelper dbHelper = new DbHelper();
-  List<Resource> resources = new List<Resource>();
-  int count = 0;
   int defaultResourceId = 3;
 
   @override
   void initState() {
     super.initState();
     _loadDefaultResourceId();
-    _loadResources();
-  }
-
-  _loadResources() async {
-    await dbHelper.initializeDb();
-    List<Resource> _resources = await dbHelper.getResources();
-    setState(() {
-      resources = _resources;
-      count = _resources.length;
-    });
   }
 
   _loadDefaultResourceId() async {
@@ -53,10 +41,24 @@ class ResourceListState extends State<ResourceList> {
       appBar: AppBar(
         title: Text("Resources"),
       ),
-      body: resourceListItems(),
+      body: FutureBuilder(
+        future: dbHelper.getResources(),
+        builder: (context, AsyncSnapshot<List<Resource>> snapshot) {
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+          if (snapshot.hasData) {
+            return ListView(
+              children: snapshot.data.map(_buildResourceItemWidget).toList(),
+            );
+          }
+          return Center(child: CircularProgressIndicator());
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          goToResourceAdd();
+          print("Add new resource");
+          //goToResourceAdd();
         },
         tooltip: "Add new Resource",
         child: Icon(Icons.add),
@@ -64,31 +66,37 @@ class ResourceListState extends State<ResourceList> {
     );
   }
 
+  _buildResourceItemWidget(Resource resource) {
+    var resourceIcon = resource.id == defaultResourceId
+        ? Icons.bookmark
+        : Icons.bookmark_border;
+
+    return Card(
+      color: Colors.amberAccent,
+      elevation: 2.0,
+      child: ListTile(
+        leading: Icon(resourceIcon),
+        title: Text(resource.name),
+        subtitle: Text(resource.description),
+        onTap: () {
+          //goToDetail(resource);
+        },
+        onLongPress: () => _setDefaultResourceId(resource.id),
+      ),
+    );
+  }
+  /*
   ListView resourceListItems() {
     return ListView.builder(
       itemCount: count,
       itemBuilder: (BuildContext context, int position) {
-        Resource resource = this.resources[position];
-        var resourceIcon = resource.id == defaultResourceId
-            ? Icons.bookmark
-            : Icons.bookmark_border;
-
-        return Card(
-          color: Colors.amberAccent,
-          elevation: 2.0,
-          child: ListTile(
-            leading: Icon(resourceIcon),
-            title: Text(resource.name),
-            subtitle: Text(resource.description),
-            onTap: () {
-              goToDetail(resource);
-            },
-            onLongPress: () => _setDefaultResourceId(resource.id),
-          ),
-        );
+        
       },
     );
-  }
+    */
+}
+
+/*
 
   void goToDetail(Resource resource) async {
     bool result = await Navigator.push(
@@ -114,3 +122,4 @@ class ResourceListState extends State<ResourceList> {
     }
   }
 }
+*/
