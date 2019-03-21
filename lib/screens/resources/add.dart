@@ -22,7 +22,7 @@ class ResourceAddState extends State<ResourceAdd> {
       ),
       body: Padding(
         padding: EdgeInsets.only(top: 30.0, left: 10.0, right: 10.0),
-        child: Column(
+        child: ListView(
           children: <Widget>[
             TextField(
               controller: txtName,
