@@ -7,11 +7,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:biricik/models/resource.dart';
 
 class DbHelper {
-  String tableResource = "Resources";
-  String colId = "Id";
-  String colDescription = "Description";
-  String colName = "Name";
-  String colUrl = "Url";
+  final String tableResource = "Resources";
+  final String colId = "Id";
+  final String colDescription = "Description";
+  final String colName = "Name";
+  final String colUrl = "Url";
 
   static Database _db;
   static final DbHelper _dbHelper = DbHelper._internal();
