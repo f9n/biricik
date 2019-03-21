@@ -54,7 +54,7 @@ class ResourceDetailState extends State<ResourceDetail> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          goToCameraConfigurations();
+          // goToCameraConfigurations();
         },
         tooltip: "Go to Camera Configurations",
         child: Icon(Icons.camera_alt),
