@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-// import 'package:biricik/domain/settings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -8,33 +8,34 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class SettingsScreenState extends State<SettingsScreen> {
-  /* static Settings settings = Settings.getInstance();
-
-  communicationSelector() {
-    return ListTile(
-      title: Text('Communication Type'),
-      subtitle: Text('Define the communication type'),
-      trailing: DropdownButton(
-        items: [
-          DropdownMenuItem(
-              value: Communication.bluetooth, child: Text('Bluetooth')),
-          DropdownMenuItem(value: Communication.wifi, child: Text('Wifi')),
-        ],
-        value: settings.communication,
-        onChanged: (value) => setState(() => settings.communication = value),
-      ),
-    );
-  }
-  */
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Settings')),
+      appBar: AppBar(
+        title: const Text("Settings"),
+      ),
       body: ListView(
         children: <Widget>[
-          Text('Default Resource'),
-          Divider(),
+          FutureBuilder<SharedPreferences>(
+            future: _prefs,
+            builder: (BuildContext context,
+                AsyncSnapshot<SharedPreferences> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return const CircularProgressIndicator();
+                default:
+                  if (snapshot.hasError)
+                    return Text('Error: ${snapshot.error}');
+
+                  var defaultResourceId =
+                      snapshot.data.getInt('defaultResourceId') ?? Null;
+                  return Text(
+                      'Default Resource Id: ${defaultResourceId == Null ? 'Not Defined' : defaultResourceId}');
+              }
+            },
+          ),
         ],
       ),
     );
