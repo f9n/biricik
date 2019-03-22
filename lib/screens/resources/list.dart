@@ -59,9 +59,7 @@ class ResourceListState extends State<ResourceList> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          goToResourceAdd();
-        },
+        onPressed: () => goToResourceAdd(),
         tooltip: "Add new Resource",
         child: Icon(Icons.add),
       ),
@@ -83,9 +81,7 @@ class ResourceListState extends State<ResourceList> {
           leading: Icon(resourceIcon),
           title: Text(resource.name),
           subtitle: Text(resource.description),
-          onTap: () {
-            goToDetail(resource);
-          },
+          onTap: () => goToDetail(resource),
           onLongPress: () => _setDefaultResourceId(resource.id),
         ),
       ),
