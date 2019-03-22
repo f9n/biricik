@@ -67,11 +67,21 @@ class DbHelper {
     Database db = await this.db;
     List<Resource> resources = new List<Resource>();
     var result = await db.rawQuery("Select * from $tableResource");
-    print("Database Getting Resources => ${result}");
+    print("Database Getting Resources => $result");
     for (var resourceObj in result) {
       var resource = Resource.fromJson(resourceObj);
       resources.add(resource);
     }
     return resources;
+  }
+
+  Future<Resource> getResourceById(int id) async {
+    Database db = await this.db;
+    var result =
+        await db.rawQuery("Select * from $tableResource where Id == $id");
+
+    print("Get Resource By Id => $result");
+    Resource resource = Resource.fromJson(result[0]);
+    return resource;
   }
 }
