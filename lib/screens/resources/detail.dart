@@ -39,16 +39,27 @@ class ResourceDetailState extends State<ResourceDetail> {
         ],
       ),
       body: Center(
-        child: Card(
-          child: Column(
-            children: <Widget>[
-              ListTile(
-                leading: Icon(Icons.shop),
-                title: Text(widget.resource.name),
-                subtitle: Text(widget.resource.description),
-              ),
-              Text("${widget.resource.name} url is ${widget.resource.url}"),
-            ],
+        child: Container(
+          margin: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(3.0),
+          decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+          child: Card(
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  title: Text("Cihaz Adı : ${widget.resource.name}"),
+                ),
+                ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  title: Text("Cihaz Açıklaması : ${widget.resource.description}"),
+                ),
+                ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  title: Text("Url Adresi : ${widget.resource.url}"),
+                ),
+              ],
+            ),
           ),
         ),
       ),
