@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+
 import 'package:biricik/screens/resources/add.dart';
 import 'package:biricik/screens/resources/detail.dart';
 import 'package:biricik/db/dbHelper.dart';
@@ -71,18 +74,40 @@ class ResourceListState extends State<ResourceList> {
         ? Icons.bookmark
         : Icons.bookmark_border;
 
-    return Card(
-      color: Colors.amberAccent,
-      elevation: 2.0,
-      child: ListTile(
-        leading: Icon(resourceIcon),
-        title: Text(resource.name),
-        subtitle: Text(resource.description),
-        onTap: () {
-          goToDetail(resource);
-        },
-        onLongPress: () => _setDefaultResourceId(resource.id),
+    return Slidable(
+      delegate: SlidableDrawerDelegate(),
+      actionExtentRatio: 0.25,
+      child: Container(
+        color: Colors.white,
+        child: ListTile(
+          leading: Icon(resourceIcon),
+          title: Text(resource.name),
+          subtitle: Text(resource.description),
+          onTap: () {
+            goToDetail(resource);
+          },
+          onLongPress: () => _setDefaultResourceId(resource.id),
+        ),
       ),
+      actions: <Widget>[],
+      secondaryActions: <Widget>[
+        IconSlideAction(
+          caption: 'Delete',
+          color: Colors.red,
+          icon: Icons.delete,
+          onTap: () async {
+            var result = await dbHelper.delete(resource.id);
+            if (result != 0) {
+              setState(() {});
+              AlertDialog alertDialog = new AlertDialog(
+                title: Text("Success"),
+                content: Text("Deleted resource: ${resource.name}"),
+              );
+              showDialog(context: context, builder: (_) => alertDialog);
+            }
+          },
+        ),
+      ],
     );
   }
 
