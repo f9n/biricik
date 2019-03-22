@@ -47,15 +47,19 @@ class ResourceDetailState extends State<ResourceDetail> {
             child: Column(
               children: <Widget>[
                 ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                   title: Text("Cihaz Adı : ${widget.resource.name}"),
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                  title: Text("Cihaz Açıklaması : ${widget.resource.description}"),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  title:
+                      Text("Cihaz Açıklaması : ${widget.resource.description}"),
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                   title: Text("Url Adresi : ${widget.resource.url}"),
                 ),
               ],
