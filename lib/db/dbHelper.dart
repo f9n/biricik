@@ -12,6 +12,7 @@ class DbHelper {
   final String colDescription = "Description";
   final String colName = "Name";
   final String colUrl = "Url";
+  final String colAddedDate = "AddedDate";
 
   static Database _db;
   static final DbHelper _dbHelper = DbHelper._internal();
@@ -37,9 +38,9 @@ class DbHelper {
     return dbResources;
   }
 
-  Future<Database> _createDb(Database db, int version) async {
+  void _createDb(Database db, int version) async {
     await db.execute(
-        "Create table $tableResource($colId integer primary key autoincrement, $colName text, $colDescription text, $colUrl text)");
+        "Create table $tableResource($colId integer primary key autoincrement, $colName text, $colDescription text, $colUrl text, $colAddedDate text)");
   }
 
   Future<int> insert(Resource resource) async {

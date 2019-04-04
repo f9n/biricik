@@ -6,7 +6,7 @@ import 'package:biricik/widgets/uv4l_camera_control.dart';
 enum Choice { Delete, Update }
 
 class ResourceDetail extends StatefulWidget {
-  Resource resource;
+  final Resource resource;
 
   ResourceDetail(this.resource);
 
@@ -24,32 +24,38 @@ class ResourceDetailState extends State<ResourceDetail> {
         title: Text("Resource Detail for ${widget.resource.name}"),
       ),
       body: Center(
-        child: Container(
-          margin: const EdgeInsets.all(15.0),
-          padding: const EdgeInsets.all(3.0),
-          decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
-          child: Card(
-            child: Column(
-              children: <Widget>[
-                ListTile(
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                  title: Text("Cihaz Adı : ${widget.resource.name}"),
-                ),
-                ListTile(
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                  title:
-                      Text("Cihaz Açıklaması : ${widget.resource.description}"),
-                ),
-                ListTile(
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                  title: Text("Url Adresi : ${widget.resource.url}"),
-                ),
-              ],
+        child: ListView(
+          padding: EdgeInsets.all(20.0),
+          children: <Widget>[
+            ListTile(
+              title: Text("Device Name\n\n${widget.resource.name}"),
+              leading: Icon(Icons.title),
             ),
-          ),
+            Divider(
+              color: Colors.black,
+            ),
+            ListTile(
+              title: Text("Description\n\n${widget.resource.description}"),
+              leading: Icon(Icons.description),
+            ),
+            Divider(
+              color: Colors.black,
+            ),
+            ListTile(
+              title: Text("Added Date\n\n${widget.resource.addedDate}"),
+              leading: Icon(Icons.date_range),
+            ),
+            Divider(
+              color: Colors.black,
+            ),
+            ListTile(
+              title: Text("URI\n\n${widget.resource.url}"),
+              leading: Icon(Icons.device_hub),
+            ),
+            Divider(
+              color: Colors.black,
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
