@@ -1,9 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:biricik/db/dbHelper.dart';
 import 'package:biricik/models/resource.dart';
 import 'package:biricik/widgets/uv4l_camera_control.dart';
 
-enum Choice { Delete, Update }
+import 'package:biricik/helpers/checks.dart';
 
 class ResourceDetail extends StatefulWidget {
   final Resource resource;
@@ -16,6 +18,27 @@ class ResourceDetail extends StatefulWidget {
 
 class ResourceDetailState extends State<ResourceDetail> {
   DbHelper dbHelper = new DbHelper();
+
+  Timer timer;
+  bool resourceStatus = false;
+
+  @override
+  void initState() {
+    super.initState();
+    var _duration = Duration(seconds: 5);
+    timer = Timer.periodic(_duration, (Timer t) async {
+      var _status = await isAlive(widget.resource.url);
+      setState(() {
+        resourceStatus = _status;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    timer.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +74,17 @@ class ResourceDetailState extends State<ResourceDetail> {
             ListTile(
               title: Text("URI\n\n${widget.resource.url}"),
               leading: Icon(Icons.device_hub),
+            ),
+            Divider(
+              color: Colors.black,
+            ),
+            ListTile(
+              title: Text(
+                "Status",
+                style: TextStyle(
+                    color: resourceStatus ? Colors.green : Colors.red),
+              ),
+              leading: Icon(resourceStatus ? Icons.check : Icons.block),
             ),
             Divider(
               color: Colors.black,
