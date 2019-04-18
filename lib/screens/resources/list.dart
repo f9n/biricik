@@ -8,6 +8,8 @@ import 'package:biricik/screens/resources/detail.dart';
 import 'package:biricik/db/dbHelper.dart';
 import 'package:biricik/models/resource.dart';
 
+import 'package:biricik/helpers/checks.dart';
+
 class ResourceList extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => ResourceListState();
@@ -67,7 +69,6 @@ class ResourceListState extends State<ResourceList> {
   }
 
   Widget _buildResourceItemWidget(Resource resource) {
-    print(resource);
     var resourceIcon = resource.id == defaultResourceId
         ? Icons.bookmark
         : Icons.bookmark_border;
@@ -77,12 +78,30 @@ class ResourceListState extends State<ResourceList> {
       actionExtentRatio: 0.25,
       child: Container(
         color: Colors.white,
-        child: ListTile(
-          leading: Icon(resourceIcon),
-          title: Text(resource.name),
-          subtitle: Text(resource.description),
-          onTap: () => goToDetail(resource),
-          onLongPress: () => _setDefaultResourceId(resource.id),
+        child: FutureBuilder(
+          future: isAlive(resource.url),
+          builder: (context, snapshot) {
+            var resourceStatusColor = Colors.yellow;
+            if (snapshot.hasData) {
+              print("Snapshot Data: ${snapshot.data}");
+              if (snapshot.data) {
+                resourceStatusColor = Colors.green;
+              } else {
+                resourceStatusColor = Colors.red;
+              }
+            }
+
+            return ListTile(
+              leading: Icon(resourceIcon),
+              title: Text(
+                resource.name,
+                style: TextStyle(color: resourceStatusColor),
+              ),
+              subtitle: Text(resource.description),
+              onTap: () => goToDetail(resource),
+              onLongPress: () => _setDefaultResourceId(resource.id),
+            );
+          },
         ),
       ),
       actions: <Widget>[],
@@ -114,7 +133,7 @@ class ResourceListState extends State<ResourceList> {
         builder: (context) => ResourceAdd(),
       ),
     );
-    print("Go To Resource Add  Page Result: ${result}");
+    print("Go To Resource Add  Page Result: $result");
   }
 
   void goToDetail(Resource resource) async {
@@ -124,6 +143,6 @@ class ResourceListState extends State<ResourceList> {
         builder: (context) => ResourceDetail(resource),
       ),
     );
-    print("Go To Detail Page Result: ${result}");
+    print("Go To Detail Page Result: $result");
   }
 }
