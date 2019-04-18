@@ -14,7 +14,7 @@ class ResourceAddState extends State<ResourceAdd> {
 
   TextEditingController txtName = new TextEditingController();
   TextEditingController txtDescription = new TextEditingController();
-  TextEditingController txtUrl = new TextEditingController();
+  TextEditingController txtUrl = new TextEditingController(text: "https://");
 
   String addedDate = now.toString();
 
@@ -25,23 +25,63 @@ class ResourceAddState extends State<ResourceAdd> {
         title: Text("Add a new resource"),
       ),
       body: Padding(
-        padding: EdgeInsets.only(top: 30.0, left: 10.0, right: 10.0),
+        padding: EdgeInsets.only(left: 10.0, right: 10.0),
         child: ListView(
           children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 5.0),
+            ),
             TextField(
               controller: txtName,
-              decoration: InputDecoration(labelText: "Name"),
+              decoration: InputDecoration(
+                labelText: "Name",
+                hintText: "r3-d3",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10.0),
+                  ),
+                ),
+              ),
+              keyboardType: TextInputType.text,
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 10.0),
             ),
             TextField(
               controller: txtDescription,
-              decoration: InputDecoration(labelText: "Description"),
+              decoration: InputDecoration(
+                labelText: "Description",
+                hintText: "My starwars robot",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10.0),
+                  ),
+                ),
+              ),
+              keyboardType: TextInputType.text,
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 10.0),
             ),
             TextField(
               controller: txtUrl,
-              decoration: InputDecoration(labelText: "Url"),
+              decoration: InputDecoration(
+                labelText: "Url",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10.0),
+                  ),
+                ),
+              ),
+              keyboardType: TextInputType.url,
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 10.0),
             ),
             RaisedButton(
               child: Text('Save'),
+              color: Theme.of(context).primaryColor,
+              textColor: Colors.white,
               onPressed: save,
             ),
           ],
