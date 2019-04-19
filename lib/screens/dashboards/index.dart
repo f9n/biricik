@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:biricik/screens/dashboards/panels/video_streaming/index.dart';
 import 'package:biricik/screens/dashboards/panels/square.dart';
+import 'package:biricik/screens/dashboards/panels/movement.dart';
 
 class DashboardsScreen extends StatefulWidget {
   @override
@@ -17,8 +18,9 @@ class DashboardsScreenState extends State<DashboardsScreen> {
       ),
       body: Stack(
         children: <Widget>[
-          VideoStreamingWidget(),
+          // VideoStreamingWidget(),
           SquareWidget(),
+          MovementWidget()
         ],
       ),
     );
