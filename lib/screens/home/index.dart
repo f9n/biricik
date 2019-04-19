@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:biricik/screens/settings/index.dart';
 
+import 'package:badge/badge.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -53,6 +55,14 @@ class _HomeScreenState extends State<HomeScreen> {
               value: _sliderValue,
             ),
             Text("Slider Value $_sliderValue"),
+            Container(
+              padding: EdgeInsets.all(10.0),
+              color: Colors.grey,
+              child: Badge.before(
+                value: "Text",
+                child: Text("button"),
+              ),
+            ),
           ],
         ),
       ),
