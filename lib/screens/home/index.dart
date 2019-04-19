@@ -24,6 +24,14 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text("Biricik"),
         actions: <Widget>[
           IconButton(
+            icon: Icon(Icons.info),
+            onPressed: () => Navigator.pushNamed(context, '/about'),
+          ),
+          IconButton(
+            icon: Icon(Icons.help),
+            onPressed: () => Navigator.pushNamed(context, '/help'),
+          ),
+          IconButton(
             icon: Icon(Icons.border_all),
             onPressed: () => Navigator.pushNamed(context, '/dashboards'),
           ),
