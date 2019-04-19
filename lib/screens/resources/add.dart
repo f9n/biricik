@@ -14,7 +14,7 @@ class ResourceAddState extends State<ResourceAdd> {
 
   TextEditingController txtName = new TextEditingController();
   TextEditingController txtDescription = new TextEditingController();
-  TextEditingController txtUrl = new TextEditingController(text: "https://");
+  TextEditingController txtUrl = new TextEditingController(text: "http://");
 
   String addedDate = now.toString();
 
