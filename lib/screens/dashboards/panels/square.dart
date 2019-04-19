@@ -8,8 +8,8 @@ class SquareWidget extends StatefulWidget {
     Key key,
     this.width = 100.0,
     this.height = 100.0,
-    this.offsetX = 200.0,
-    this.offsetY = 200.0,
+    this.offsetX = 20.0,
+    this.offsetY = 20.0,
   }) : super(key: key);
 
   @override
@@ -34,10 +34,10 @@ class _SquareState extends State<SquareWidget> {
         onPanUpdate: (details) {
           var newDxOffset = offset.dx + details.delta.dx;
           var newDyOffset = offset.dy + details.delta.dy;
-          print("Dx: $newDxOffset Dy: $newDyOffset");
+          print("Square Dx: $newDxOffset Dy: $newDyOffset");
           double width = MediaQuery.of(context).size.width;
           double height = MediaQuery.of(context).size.height;
-          print("Real Width: $width, Height: $height");
+          print("Square Real Width: $width, Height: $height");
           if ((0 < newDxOffset && newDxOffset < width - widget.width) &&
               (0 < newDyOffset && newDyOffset < height - widget.height)) {
             setState(() {

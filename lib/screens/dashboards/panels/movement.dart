@@ -6,13 +6,15 @@ import 'package:http/http.dart' as http;
 class MovementWidget extends StatefulWidget {
   final double width, height;
   final double offsetX, offsetY;
+  final String url;
 
   MovementWidget({
     Key key,
     this.width = 180.0,
     this.height = 180.0,
-    this.offsetX = 200.0,
-    this.offsetY = 200.0,
+    this.offsetX = 150.0,
+    this.offsetY = 150.0,
+    @required this.url,
   }) : super(key: key);
 
   @override
@@ -43,10 +45,10 @@ class _MovementState extends State<MovementWidget> {
         onPanUpdate: (details) {
           var newDxOffset = offset.dx + details.delta.dx;
           var newDyOffset = offset.dy + details.delta.dy;
-          print("Dx: $newDxOffset Dy: $newDyOffset");
+          print("Movement Dx: $newDxOffset Dy: $newDyOffset");
           double width = MediaQuery.of(context).size.width;
           double height = MediaQuery.of(context).size.height;
-          print("Real Width: $width, Height: $height");
+          print("Movement Real Width: $width, Height: $height");
           // Dx 0 dan kucuk olamaz.
           // Dx En yuksek enlik - widget'in genisliginden buyuk olamaaz.
           // Dy 0 dan kucuk olamaz.
@@ -156,9 +158,9 @@ class _MovementState extends State<MovementWidget> {
         "left",
         "right",
       ].contains(status)) {
-        print(status);
+        var url = "${widget.url}/$status";
+        print(url);
         /*
-        var url;
         http.get(url).then((res) {
           print("Response status: ${res.statusCode}");
           print("Response body: ${res.body}");
