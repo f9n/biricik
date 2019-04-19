@@ -76,12 +76,15 @@ class DbHelper {
     return resources;
   }
 
-  Future<Resource> getResourceById(int id) async {
+  Future getResourceById(int id) async {
     Database db = await this.db;
     var result =
         await db.rawQuery("Select * from $tableResource where Id == $id");
 
     print("Get Resource By Id => $result");
+    if (result == []) {
+      return null;
+    }
     Resource resource = Resource.fromJson(result[0]);
     return resource;
   }

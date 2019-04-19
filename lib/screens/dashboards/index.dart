@@ -18,9 +18,10 @@ class DashboardsScreenState extends State<DashboardsScreen> {
   DbHelper dbHelper = new DbHelper();
   SharedPreferences sharedPreferences;
 
-  Future<Resource> _getDefaultResource() async {
+  Future _getDefaultResource() async {
     sharedPreferences = await SharedPreferences.getInstance();
     var defaultResourceId = sharedPreferences.getInt('defaultResourceId');
+    print("Default Resource Id: $defaultResourceId");
     return dbHelper.getResourceById(defaultResourceId);
   }
 
@@ -30,11 +31,19 @@ class DashboardsScreenState extends State<DashboardsScreen> {
       appBar: AppBar(
         title: Text("Dashboards"),
       ),
-      body: FutureBuilder<Resource>(
+      body: FutureBuilder(
         future: _getDefaultResource(),
-        builder: (BuildContext context, AsyncSnapshot<Resource> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          print("Snaphost: $snapshot");
           if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            Widget message;
+            print(snapshot.data);
+            if (snapshot.data == null) {
+              message = Text('Hic bir resource kullanilmak icin tanimlanmadi.');
+            } else {
+              message = Text('Error: ${snapshot.error}');
+            }
+            return Center(child: message);
           }
           if (snapshot.hasData) {
             var url = snapshot.data.url;
@@ -48,7 +57,9 @@ class DashboardsScreenState extends State<DashboardsScreen> {
               ],
             );
           }
-          return Center(child: CircularProgressIndicator());
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         },
       ),
     );
