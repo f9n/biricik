@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+
 import 'package:biricik/db/dbHelper.dart';
 import 'package:biricik/models/resource.dart';
 
@@ -17,6 +19,14 @@ class ResourceAddState extends State<ResourceAdd> {
   TextEditingController txtUrl = new TextEditingController(text: "http://");
 
   String addedDate = now.toString();
+
+  @override
+  void dispose() {
+    txtUrl.dispose();
+    txtDescription.dispose();
+    txtName.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +100,34 @@ class ResourceAddState extends State<ResourceAdd> {
     );
   }
 
+  void _showDialog(String msg) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Alert"),
+          content: new Text(msg),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void save() async {
+    if (txtName.text == "" || txtDescription.text == "" || txtUrl.text == "") {
+      _showDialog("Name or description or url can not be empty.");
+      return;
+    }
     int result = await dbHelper.insert(
       Resource.withoutId(
         name: txtName.text,

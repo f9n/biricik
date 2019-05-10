@@ -111,14 +111,51 @@ class ResourceListState extends State<ResourceList> {
           color: Colors.red,
           icon: Icons.delete,
           onTap: () async {
-            var result = await dbHelper.delete(resource.id);
-            if (result != 0) {
-              setState(() {});
-              AlertDialog alertDialog = new AlertDialog(
-                title: Text("Success"),
-                content: Text("Deleted resource: ${resource.name}"),
-              );
-              showDialog(context: context, builder: (_) => alertDialog);
+            var wanted = false;
+            await showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: new Text("Alert"),
+                  content: new Text('Are you sure about that?'),
+                  actions: <Widget>[
+                    new FlatButton(
+                      child: new Text("Yes"),
+                      onPressed: () {
+                        wanted = true;
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    new FlatButton(
+                      child: new Text("No"),
+                      onPressed: () {
+                        wanted = false;
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+            if (wanted) {
+              var result = await dbHelper.delete(resource.id);
+              if (result != 0) {
+                setState(() {});
+                AlertDialog alertDialog = new AlertDialog(
+                  title: Text("Success"),
+                  content: Text("Deleted resource: ${resource.name}"),
+                  actions: <Widget>[
+                    // usually buttons at the bottom of the dialog
+                    new FlatButton(
+                      child: new Text("Close"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+                showDialog(context: context, builder: (_) => alertDialog);
+              }
             }
           },
         ),
