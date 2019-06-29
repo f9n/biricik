@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
+// import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class Uv4lCameraConfigurationScreen extends StatefulWidget {
   final String name;
@@ -66,7 +66,13 @@ class _Uv4lCameraConfigurationScreenState
       appBar: AppBar(
         title: Text('${widget.name} - Camera Configuration'),
       ),
-      body: Container(
+      body: Container(),
+    );
+  }
+}
+
+/**
+ * Container(
         margin: EdgeInsets.all(15.0),
         child: FormBuilder(
           context,
@@ -102,6 +108,4 @@ class _Uv4lCameraConfigurationScreenState
           },
         ),
       ),
-    );
-  }
-}
+ */

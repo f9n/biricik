@@ -8,6 +8,7 @@ import 'package:biricik/models/resource.dart';
 import 'package:biricik/screens/dashboards/panels/video_streaming.dart';
 import 'package:biricik/screens/dashboards/panels/square.dart';
 import 'package:biricik/screens/dashboards/panels/movement.dart';
+import 'package:biricik/screens/dashboards/panels/distance.dart';
 
 class DashboardsScreen extends StatefulWidget {
   @override
@@ -52,6 +53,9 @@ class DashboardsScreenState extends State<DashboardsScreen> {
                 // VideoStreamingWidget(url: url),
                 SquareWidget(),
                 MovementWidget(
+                  url: url,
+                ),
+                DistanceWidget(
                   url: url,
                 ),
               ],
